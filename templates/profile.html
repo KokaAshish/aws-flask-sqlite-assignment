@@ -1,0 +1,27 @@
+<!doctype html>
+<html><body>
+<h2>Profile</h2>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}<ul>{% for m in messages %}<li>{{m}}</li>{% endfor %}</ul>{% endif %}
+{% endwith %}
+
+<p><b>Username:</b> {{ user["username"] }}</p>
+<p><b>First name:</b> {{ user["first_name"] }}</p>
+<p><b>Last name:</b> {{ user["last_name"] }}</p>
+<p><b>Email:</b> {{ user["email"] }}</p>
+<p><b>Address:</b> {{ user["address"] }}</p>
+
+<hr>
+<h3>Upload Limerick.txt</h3>
+<form method="POST" action="/upload/{{ user['username'] }}" enctype="multipart/form-data">
+  <input type="file" name="file" required>
+  <button type="submit">Upload</button>
+</form>
+
+{% if limerick_wc is not none %}
+  <p><b>Word count:</b> {{ limerick_wc }}</p>
+  <p><a href="/download/{{ user['username'] }}">Download Limerick.txt</a></p>
+{% endif %}
+
+<p><a href="/login">Re-login</a></p>
+</body></html>
